@@ -104,7 +104,7 @@ for contact in recipients:
     message = client.messages \
                     .create(
                          body=stock_info_message,
-                         from_='+17327163353',
+                         from_='+17327163353', # Enter the phone number you were provided from the twillio client here
                          to=contact
                      )
     print(message.sid)
