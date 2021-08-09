@@ -2,18 +2,16 @@ import requests
 import datetime as dt
 from twilio.rest import Client
 
-STOCK = "TSLA"
-COMPANY_NAME = "Tesla Inc"
+STOCK = "TSLA" # Edit stock symbol here
+COMPANY_NAME = "Tesla Inc" # Edit Company name here
 
 today = dt.datetime.today()
-# current_date = today.date()
 current = today - dt.timedelta(days=1)
 current_date = current.date()
 
 yesterday = today - dt.timedelta(days=2)
 yesterday_date = yesterday.date()
 
-# print(current_date)
 print(current_date)
 print(yesterday_date)
 
@@ -34,7 +32,6 @@ stock_data_response = requests.get(url=stock_price_api_url, params=stock_price_a
 stock_data_response.raise_for_status()
 
 response = stock_data_response.json()
-# print(response)
 
 today_closing_price = float(response["Time Series (Daily)"][str(current_date)]['4. close'])
 yesterday_closing_price = float(response["Time Series (Daily)"][str(yesterday_date)]['4. close'])
@@ -66,7 +63,7 @@ news_api_parameters = {
     "q": "tesla"
 }
 
-# news_data_response = requests.get(url=news_api_url, params=news_api_parameters)
+
 news_api_response = requests.get(url=news_api_url, params=news_api_parameters)
 news_api_response.raise_for_status()
 news_api_data = news_api_response.json()
@@ -75,9 +72,6 @@ news_title = news_api_data["articles"][0]["title"]
 news_description = news_api_data["articles"][0]["description"]
 news_provider = news_api_data["articles"][0]["source"]["name"]
 
-# print(news_title)
-# print(news_description)
-# print(news_provider)
 
 stock_info_message = ""
 if percentage_diff >= 1.00: #CHANGE THIS VALUE TO A VALUE THAT YOU PERFER
@@ -94,7 +88,7 @@ if percentage_diff >= 1.00: #CHANGE THIS VALUE TO A VALUE THAT YOU PERFER
 
 ## STEP 3: Use https://www.twilio.com
 # Send a seperate message with the percentage change and each article's title and description to your phone number. 
-account_sid = "AC2b8d64978c2d736f51b6c1aa6853e864"
+account_sid = "AC2b8d64978c2d736f51b6c1aa6853e864" # Kindly use your own account sid and auth token
 auth_token = "9b6e8cf2c66e62eb8ccbe9a6fef0d519"
 
 client = Client(account_sid, auth_token)
